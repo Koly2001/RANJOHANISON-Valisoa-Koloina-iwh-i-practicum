@@ -18,7 +18,7 @@ app.get('/', async (req, res) => {
     // Faites une requête GET à l'API HubSpot pour récupérer la liste des Custom Objects
     const response = await axios.get('https://api.hubapi.com/crm/v3/objects/contacts/Pets', {
       headers: {
-        Authorization: `Bearer ${'pat-eu1-f73f79ce-5d7d-4517-94cd-23d5b9222ed4'}`
+        Authorization: `Bearer ${PRIVATE_APP_ACCESS}`
       }
     });
 
@@ -42,7 +42,7 @@ app.get('/update-cobj/:name?', async (req, res) => {
   
     if (objName) {
       try {
-        const response = await axios.get(`https://api.hubapi.com/crm/v3/objects/contacts/Pets?hapikey=${'pat-eu1-f73f79ce-5d7d-4517-94cd-23d5b9222ed4'}&property=Name&value=${encodeURIComponent(objName)}`);
+        const response = await axios.get(`https://api.hubapi.com/crm/v3/objects/contacts/Pets?hapikey=${PRIVATE_APP_ACCESS}&property=Name&value=${encodeURIComponent(objName)}`);
         
         // Récupérez les Custom Objects à partir de la réponse de l'API
         objData = response.data.results[0];
@@ -70,7 +70,7 @@ app.post('/update-cobj', async (req, res) => {
       if (formData.id) {
         await axios.patch(`https://api.hubapi.com/crm/v3/objects/contacts/Pets${formData.id}`, formData, {
           headers: {
-            Authorization: `Bearer ${'pat-eu1-f73f79ce-5d7d-4517-94cd-23d5b9222ed4'}`,
+            Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
             'Content-Type': 'application/json'
           }
         });
@@ -78,7 +78,7 @@ app.post('/update-cobj', async (req, res) => {
 
         await axios.post('https://api.hubapi.com/crm/v3/objects/contacts/Pets', formData, {
           headers: {
-            Authorization: `Bearer ${'pat-eu1-f73f79ce-5d7d-4517-94cd-23d5b9222ed4'}`,
+            Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
             'Content-Type': 'application/json'
           }
         });
