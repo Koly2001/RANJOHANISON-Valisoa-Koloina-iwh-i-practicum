@@ -91,14 +91,6 @@ app.post('/update-cobj', async (req, res) => {
   });
   ;
 
-/** 
-* * This is sample code to give you a reference for how you should structure your calls. 
-
-
-
-* * App.post sample
-
-*/
 
 
 // * Localhost
