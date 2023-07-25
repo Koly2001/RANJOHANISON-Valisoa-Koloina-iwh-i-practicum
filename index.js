@@ -41,30 +41,31 @@ app.get('/update-cobj/:name?', async (req, res) => {
     let objData = {};
   
     if (objName) {
-
-      const response = await fetch(`http://localhost:3000/api/custom-objects/${objName}`);
-      objData = await response.json();
+      try {
+        const response = await axios.get(`https://api.hubapi.com/crm/v3/objects/contacts?hapikey=${'pat-eu1-f73f79ce-5d7d-4517-94cd-23d5b9222ed4'}&property=Name&value=${encodeURIComponent(objName)}`);
+        
+        // Récupérez les Custom Objects à partir de la réponse de l'API
+        objData = response.data.results[0];
+      } catch (error) {
+        console.error('Erreur lors de la récupération de Pets depuis HubSpot :', error);
+        // Gérez l'erreur appropriée ici (affichage d'un message d'erreur, etc.)
+      }
     }
   
     res.render('updates', {
-      pageTitle: 'Mettre à jour le formulaire d\'objet personnalisé | Integrating With HubSpot I Practicum',
+      pageTitle: 'Mettre à jour le formulaire de Pets | Integrating With HubSpot I Practicum',
       objData,
     });
   });
-  
 
 // TODO: ROUTE 3 - Create a new app.post route for the custom objects form to create or update your custom object data. Once executed, redirect the user to the homepage.
-// Route POST pour la mise à jour/création de l'objet personnalisé
 app.post('/update-cobj', async (req, res) => {
     const formData = {
-      id: req.body.id,
       Name: req.body.Name,
       Type: req.body.Type,
       Age: req.body.Age,
-      // Ajoutez plus de champs si nécessaire
     };
   
-    // Votre code pour gérer les données et les requêtes HTTP avec Axios
     try {
       if (formData.id) {
         await axios.patch(`https://api.hubapi.com/crm/v3/objects/contacts/${formData.id}`, formData, {
