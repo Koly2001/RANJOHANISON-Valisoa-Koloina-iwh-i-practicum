@@ -1,0 +1,23 @@
+doctype html
+html
+  head
+    title= 'Homepage | Integrating With HubSpot I Practicum'
+  body
+    p
+      a(href='/update-cobj') Add/Update this table
+
+
+    table
+      thead
+        tr
+          th Name
+          th Type
+          th Age 
+
+      tbody
+        each obj in customObjects
+          tr
+            td= obj.Name
+            td= obj.Type
+            td= obj.Age
+

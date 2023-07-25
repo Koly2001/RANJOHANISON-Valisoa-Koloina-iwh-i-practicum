@@ -1,0 +1,20 @@
+doctype html
+html
+  head
+    title= pageTitle
+  body
+    // Link to the homepage
+    p
+      a(href='/')
+
+    form(action='/update-cobj', method='post')
+      label(for='Name') Name:
+      input(type='String', name='Name')
+      br
+      label(for='Type') Type:
+      input(type='text', name='Type')
+      br
+      label(for='Age') Age: 
+      input(type='Number', name='Age')
+
+      input(type='submit', value='Submit')
