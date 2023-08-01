@@ -1,0 +1,20 @@
+doctype html
+html
+  head
+    title Ma page d'accueil
+  body
+    h1 Ma page d'accueil
+    table
+      thead
+        tr
+          th Name
+          th Type
+          th Age
+      tbody
+        each obj in customObjectData.results
+          tr
+            td= obj.properties.Name.value
+            td= obj.properties.Type.value
+            td= obj.properties.Age.value
+    p
+      a(href='/update-cobj') Ajouter/Modifier ce tableau

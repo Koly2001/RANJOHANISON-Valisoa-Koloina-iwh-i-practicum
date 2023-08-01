@@ -1,24 +1,19 @@
 doctype html
 html
-doctype html
-html 
-    head 
-        title= `${title}`
-        meta(name="viewport" content="width=device-width, initial-scale=1")
-        link(rel="stylesheet", href="/css/style.css")
+  head
+    title= pageTitle
   body
-    // Link to the homepage
-    p
-      a(href='/')
-
+    h1= pageTitle
+    p #{objData}
     form(action='/update-cobj', method='post')
-      label(for='Name') Name:
-      input(type='String', name='Name')
+      label(for='Name') Nom:
+      input(type='text', id='Name', name='Name', value=objData.Name)
       br
       label(for='Type') Type:
-      input(type='text', name='Type')
+      input(type='text', id='Type', name='Type', value=objData.Type)
       br
-      label(for='Age') Age: 
-      input(type='Number', name='Age')
+      label(for='Age') Age:
+      input(type='text', id='Age', name='Age', value=objData.Age)
+      br
+      input(type='submit', value='Envoyer')
 
-      input(type='submit', value='Submit')
