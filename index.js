@@ -23,9 +23,9 @@ app.get('/', async (req, res) => {
     response.data.results.forEach(element => {
       console.log('Prp', element);
     });
-    console.log(response.data);
     // Récupérez les Custom Objects à partir de la réponse de l'API
     const customObjects = response.data.results;
+    console.log(customObjects[0]);
 
     res.render('homepage', { customObjects }); // Correction ici : utilisation de "homepage" au lieu de "/"
   } catch (error) {
@@ -37,11 +37,11 @@ app.get('/', async (req, res) => {
 
 // TODO: ROUTE 2 - Create a new app.get route for the form to create or update new custom object data. Send this data along in the next route.
 
-app.get('/update-cobj/:name?', async (req, res) => {
-  const objName = req.params.name;
+app.get('/update-cobj/:ID?', async (req, res) => {
+  const objID = req.params.name;
   let objData = {};
 
-  if (objName) {
+  if (objID) {
     try {
       const response = await axios.get(`https://api.hubapi.com/crm/v3/objects/${CUSTOM_OBJECT_ID}`);
 
