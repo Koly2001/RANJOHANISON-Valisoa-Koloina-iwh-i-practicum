@@ -13,9 +13,9 @@ html
       tbody
         each obj in customObjects
           tr
-            td= obj.name
-            td= obj.type
-            td= obj.age
+            td= obj.properties.name
+            td= obj.properties.type
+            td= obj.properties.age
     p
       a(href='/update-cobj') Ajouter/Modifier ce tableau
 
