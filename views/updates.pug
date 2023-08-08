@@ -7,13 +7,13 @@ html
     p #{objData}
     form(action='/update-cobj', method='post')
       label(for='Name') Nom:
-      input(type='text', id='Name', name='Name', value=objData.Name)
+      input(type='text', id='name', name='Name', value=objData.name)
       br
       label(for='Type') Type:
-      input(type='text', id='Type', name='Type', value=objData.Type)
+      input(type='text', id='type', name='Type', value=objData.type)
       br
       label(for='Age') Age:
-      input(type='text', id='Age', name='Age', value=objData.Age)
+      input(type='text', id='age', name='Age', value=objData.age)
       br
       input(type='submit', value='Envoyer')
 

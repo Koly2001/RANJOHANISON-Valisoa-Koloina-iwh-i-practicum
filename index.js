@@ -9,41 +9,36 @@ app.use(express.json());
 
 // * Please include the private app access token in your repo BUT only an access token built in a TEST ACCOUNT. Don't do this practicum in your normal account.
 const PRIVATE_APP_ACCESS = 'pat-eu1-f73f79ce-5d7d-4517-94cd-23d5b9222ed4';
-const CUSTOM_OBJECT_ID = '2-116324551';
+const CUSTOM_OBJECT = 'pets?properties=name,type,age';
 
 // Route GET pour la page d'accueil
 app.get('/', async (req, res) => {
   try {
     // Faites une requête GET à l'API HubSpot pour récupérer la liste des Custom Objects
-    const response = await axios.get(`https://api.hubapi.com/crm/v3/objects/${CUSTOM_OBJECT_ID}`, {
+    const response = await axios.get(`https://api.hubapi.com/crm/v3/objects/${CUSTOM_OBJECT}`, {
       headers: {
         Authorization: `Bearer ${PRIVATE_APP_ACCESS}`
       }
     });
-    response.data.results.forEach(element => {
-      console.log('Prp', element);
-    });
-    // Récupérez les Custom Objects à partir de la réponse de l'API
     const customObjects = response.data.results;
     console.log(customObjects[0]);
 
-    res.render('homepage', { customObjects }); // Correction ici : utilisation de "homepage" au lieu de "/"
+    res.render('homepage', { customObjects });
   } catch (error) {
     console.error('Erreur lors de la récupération des Custom Objects depuis HubSpot :', error);
-    // Gérez l'erreur appropriée ici (affichage d'un message d'erreur, etc.)
-    res.render('homepage', { customObjects: [] }); // En cas d'erreur, envoyez une liste vide
+    res.render('homepage', { customObjects: [] });
   }
 });
 
 // TODO: ROUTE 2 - Create a new app.get route for the form to create or update new custom object data. Send this data along in the next route.
 
 app.get('/update-cobj/:ID?', async (req, res) => {
-  const objID = req.params.name;
+  const objID = req.params.id;
   let objData = {};
 
   if (objID) {
     try {
-      const response = await axios.get(`https://api.hubapi.com/crm/v3/objects/${CUSTOM_OBJECT_ID}`);
+      const response = await axios.get(`https://api.hubapi.com/crm/v3/objects/${CUSTOM_OBJECT}`);
 
       // Récupérez les Custom Objects à partir de la réponse de l'API
       objData = response.data.results[0];
@@ -63,23 +58,22 @@ app.get('/update-cobj/:ID?', async (req, res) => {
 
 // TODO: ROUTE 3 - Create a new app.post route for the custom objects form to create or update your custom object data. Once executed, redirect the user to the homepage.
 app.post('/update-cobj', async (req, res) => {
-  const formData = {
-    id: req.body.id, // Assurez-vous que cette propriété est incluse si nécessaire
-    Name: req.body.Name,
-    Type: req.body.Type,
-    Age: req.body.Age,
+  const formData = { // Assurez-vous que cette propriété est incluse si nécessaire
+    Name: req.body.name,
+    Type: req.body.type,
+    Age: req.body.age,
   };
 
   try {
     if (formData.id) {
-      await axios.patch(`https://api.hubapi.com/crm/v3/objects/${CUSTOM_OBJECT_ID}`, formData, {
+      await axios.patch(`https://api.hubapi.com/crm/v3/objects/${CUSTOM_OBJECT}`, formData, {
         headers: {
           Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
           'Content-Type': 'application/json'
         }
       });
     } else {
-      await axios.post(`https://api.hubapi.com/crm/v3/objects/${CUSTOM_OBJECT_ID}`, formData, {
+      await axios.post(`https://api.hubapi.com/crm/v3/objects/${CUSTOM_OBJECT}`, formData, {
         headers: {
           Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
           'Content-Type': 'application/json'
